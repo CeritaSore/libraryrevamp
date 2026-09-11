@@ -6,15 +6,20 @@ export PORT
 
 echo "==> Application booting on port ${PORT} with FrankenPHP..."
 
-echo "==> Setting permissions for storage and bootstrap/cache..."
+# Safeguard: Remove capabilities if present
+setcap -r /usr/local/bin/frankenphp 2>/dev/null || true
+
+echo "==> Setting permissions for storage, bootstrap/cache, and Caddy..."
 mkdir -p /var/www/html/storage/framework/sessions \
          /var/www/html/storage/framework/views \
          /var/www/html/storage/framework/cache \
          /var/www/html/storage/logs \
-         /var/www/html/bootstrap/cache
+         /var/www/html/bootstrap/cache \
+         /data/caddy \
+         /config/caddy
 
-chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /data /config 2>/dev/null || true
+chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache /data /config 2>/dev/null || true
 
 # Only attempt migrations & schema setup if DB configuration is present
 if [ -n "$DATABASE_URL" ] || [ -n "$DB_URL" ] || [ -n "$DB_HOST" ]; then
@@ -32,4 +37,4 @@ php artisan view:cache || true
 php artisan event:cache || true
 
 echo "==> Starting FrankenPHP application server..."
-exec frankenphp run --config /etc/caddy/Caddyfile
+exec frankenphp run --config /etc/caddy/Caddyfile --adapter caddyfile

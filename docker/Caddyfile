@@ -1,6 +1,8 @@
 {
 	# Disable admin API in production
 	admin off
+	# Disable auto HTTPS since Render terminates SSL at edge reverse proxy
+	auto_https off
 	# Log in JSON format
 	log {
 		level WARN

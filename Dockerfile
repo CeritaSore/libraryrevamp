@@ -51,6 +51,12 @@ RUN install-php-extensions \
     bcmath \
     redis
 
+# Remove file capabilities from frankenphp binary.
+# Render container sandboxes enforce nosuid/seccomp which blocks binaries with setcap capabilities,
+# causing "frankenphp: Operation not permitted" on container execution.
+RUN apk add --no-cache libcap && \
+    setcap -r /usr/local/bin/frankenphp || true
+
 # Configure PHP for production
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini" && \
     sed -i 's/memory_limit = 128M/memory_limit = 256M/' "$PHP_INI_DIR/php.ini" && \
