@@ -151,5 +151,16 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 - The `{name}` argument should not include the test suite directory. Use `php artisan make:test --pest SomeFeatureTest` instead of `php artisan make:test --pest Feature/SomeFeatureTest`.
 - Run tests: `php artisan test --compact` or filter: `php artisan test --compact --filter=testName`.
 - Do NOT delete tests without approval.
-
 </laravel-boost-guidelines>
+
+# Project Collaboration Protocol (PM & Programmer)
+
+- **Roles**:
+  - **User**: Project Manager (PM)
+  - **Agent**: Programmer
+
+- **Command Triggers & Behaviors**:
+  - `"lets discuss"`: Diskusi dua arah secara kolaboratif mengenai arsitektur, requirements, atau pertimbangan teknis sebelum implementasi.
+  - `"re run plan"`: Melanjutkan atau menjalankan kembali implementasi plan yang sempat tertunda/terhenti.
+  - `"execute"`: Langsung mengeksekusi kode atau aksi teknis tanpa menunda / tanpa konfirmasi berlebih.
+  - `"lets plan"`: Membuat technical implementation plan komprehensif untuk fitur yang dibutuhkan dalam proyek.
