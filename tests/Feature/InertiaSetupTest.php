@@ -2,13 +2,16 @@
 
 use Inertia\Testing\AssertableInertia as Assert;
 
-test('root route returns inertia welcome page with title', function () {
+test('root route returns inertia welcome frontpage with showcase props', function () {
     $response = $this->get('/');
 
     $response->assertOk();
     $response->assertInertia(fn (Assert $page) => $page
         ->component('Welcome')
-        ->where('title', 'Hello World')
+        ->has('stats')
+        ->has('categories')
+        ->has('featuredBooks')
+        ->has('services')
     );
 });
 
